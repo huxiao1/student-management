@@ -10,14 +10,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int insert();
-void max();
-void average();
-void sort();
-void print();
-void delete();
-void insert1();
-void select1();
+int insert(int len);
+void max(int len);
+void average(int len);
+void sort(int len);
+void print(int len);
+void delete1(int len);
+void insert1(int len);
+void select1(int len);
 
 struct student        //结构体的定义
 {
@@ -46,7 +46,7 @@ void menu()           //菜单
 }
 
 
-void input(len)           //输入函数
+void input(int len)           //输入函数
 {
     printf("请依次输入学生的 学号 姓名 性别 成绩\n");
     for(int i=0;i<len;i++)
@@ -54,7 +54,7 @@ void input(len)           //输入函数
 }
 
 
-void output(len)          //输出函数
+void output(int len)          //输出函数
 {
     printf("学号\t姓名\t性别\t成绩\n");
     for(int i=0;i<len;i++)
@@ -62,7 +62,7 @@ void output(len)          //输出函数
 }
 
 
-void max(len)             //最大值
+void max(int len)             //最大值
 {
     int max=0;
     for(int i=0;i<len;i++)
@@ -74,7 +74,7 @@ void max(len)             //最大值
 }
 
 
-void ave(len)           //求平均值
+void ave(int len)           //求平均值
 {
     float ave;
     float sum=0;
@@ -85,8 +85,7 @@ void ave(len)           //求平均值
 }
 
 
-
-void sort(len)         //排序函数
+void sort(int len)         //排序函数
 {
     struct student temp;
     for(int i=0;i<len-1;i++)
@@ -103,7 +102,7 @@ void sort(len)         //排序函数
 }
 
 
-void delete(int len)      //删除函数
+void delete1(int len)      //删除函数
 {
     int i = 0;
     //int j = 0,k;
@@ -146,12 +145,12 @@ void insert1(int len)
         printf("位置输入错误:");
     else
     {
-        for( j=len;j>=weizhi-1;j--)
+        for( j=len;j>=weizhi;j--)
         {
-            strcpy(stu[j+1].num,stu[j].num);
-            strcpy(stu[j+1].name,stu[j].name);
-            strcpy(stu[j+1].sex,stu[j].sex);
-            stu[j+1].score=stu[j].score;
+            strcpy(stu[j].num,stu[j-1].num);
+            strcpy(stu[j].name,stu[j-1].name);
+            strcpy(stu[j].sex,stu[j-1].sex);
+            stu[j].score=stu[j-1].score;
         }
         len=len+1;
         strcpy(stu[weizhi-1].num,stu[i].num);
@@ -238,7 +237,7 @@ int main()
             case 3:  max(len);    break;
             case 4:  ave(len);    break;
             case 5:  sort(len);   break;
-            case 6:  delete(len); break;
+            case 6:  delete1(len); break;
             case 7:  insert1(len); break;
             case 8:  select1(len); break;
             case 0:  exit(0);  break;
