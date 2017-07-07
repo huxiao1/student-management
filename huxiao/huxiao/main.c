@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int insert();
 void max();
@@ -15,14 +16,16 @@ void average();
 void sort();
 void print();
 void delete();
+void insert1();
+void select1();
 
 struct student        //结构体的定义
 {
-    char num[20];
-    char name[10];
-    char sex[6];
+    char num[200];
+    char name[100];
+    char sex[60];
     float score;
-}stu[10];
+}stu[100];
 
 
 
@@ -102,37 +105,117 @@ void sort(len)         //排序函数
 
 void delete(int len)      //删除函数
 {
-    int i,k;
-    int j = 0;
-    char wanted;
+    int i = 0;
+    //int j = 0,k;
+    char wanted[10];
     
     printf("输入你想删除的学生学号:");
-    scanf("%s",&wanted);
+    scanf("%s",wanted);
     
+    while(strcmp(stu[i].name,wanted)!=0&&i<len)
+        i++;
+    if(i==len)
+    { printf("不存在此人!\n"); /*返回失败信息*/
+    }
+    for(int j=i;j<len-1;j++) /*删除操作*/
+    {
+        strcpy(stu[j].num,stu[j+1].num);
+        strcpy(stu[j].name,stu[j+1].name);
+        strcpy(stu[j].sex,stu[j+1].sex);
+        stu[j].score=stu[j+1].score;
+    }
+    len--;
+    printf("\t\tcongratulations Successed!\n"); /*返回成功信息*/
+    output(len);
+}
+
+
+void insert1(int len)
+{
+    int j,i = 0;
+    
+    int weizhi;
+    
+    printf("请依次输入你想插入的学生的 学号 姓名 性别 成绩\n");
+        scanf("%s %s %s %f",stu[i].num,stu[i].name,stu[i].sex,&stu[i].score);
+    
+    printf("输入你想插入的位置:");
+        scanf("%d",&weizhi);
+    
+    if((weizhi-1<0) || (weizhi-1>len))
+        printf("位置输入错误:");
+    else
+    {
+        for( j=len;j>=weizhi-1;j--)
+        {
+            strcpy(stu[j+1].num,stu[j].num);
+            strcpy(stu[j+1].name,stu[j].name);
+            strcpy(stu[j+1].sex,stu[j].sex);
+            stu[j+1].score=stu[j].score;
+        }
+        len=len+1;
+        strcpy(stu[weizhi-1].num,stu[i].num);
+        strcpy(stu[weizhi-1].name,stu[i].name);
+        strcpy(stu[weizhi-1].sex,stu[i].sex);
+        stu[weizhi-1].score=stu[i].score;
+        printf("现在的数组为:");
+        output(len);
+        printf("\n");
+    }
+}
+
+
+
+/*
     for(i=0;;i++)
     {
         if(stu[i].num==wanted)
-        {j=i;break;}
+        {
+            j=i;
+            for(k=j;k<len;k++)
+                {
+                    stu[k]=stu[k+1];
+                }
+            len--;
+            printf("删除成功!\n");
+            printf("现在的学生信息为:");
+            output(len);
+            break;
+        }
         
         if(i==len-1)
         {
-            printf("error");
-            exit(-1);
+            printf("不存在此人!");
+            break;
         }
         else
             continue;
         
     }
-    for(k=j;k<len;k++)
-    {
-        stu[k]=stu[k+1];
-    }
-    len--;
-    printf("删除成功!\n");
-    printf("现在的学生信息为:");
-    output(len);
-}
+ */
 
+
+
+void select1(int len)
+{
+    int i = 0;
+    char wanted[10];
+    
+    printf("输入你想查找的学生学号:");
+    scanf("%s",wanted);
+    
+    while(strcmp(stu[i].name,wanted)!=0&&i<len)
+        i++;
+    if(i==len)
+    {
+        printf("不存在此人!\n"); /*返回失败信息*/
+    }
+    else
+    {
+        printf("Congratulations!查找成功\n");
+        printf("%s %s %s %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score);
+    }
+}
 
 
 int main()
@@ -156,6 +239,8 @@ int main()
             case 4:  ave(len);    break;
             case 5:  sort(len);   break;
             case 6:  delete(len); break;
+            case 7:  insert1(len); break;
+            case 8:  select1(len); break;
             case 0:  exit(0);  break;
             default: printf("错误的输入，请重新输入：");
         }
