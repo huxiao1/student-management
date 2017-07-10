@@ -512,7 +512,7 @@ int main()
                 cls();
                 printf("错误的输入，请重新输入：");
             }
-        }
+        } 
     }
     
     return 0;
