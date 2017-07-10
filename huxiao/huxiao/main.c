@@ -13,7 +13,7 @@ struct student        //结构体的定义
     float score2;
     float score3;
     float sum;
-}stu[100];
+}stu[100],a[];
 
 
 
@@ -183,9 +183,8 @@ void cls(){
     //如果编译系统为windows，用此句作为清屏
     //system("cls");
     //如果编译系统非windows，尽量用此句清屏
-    //for(int i = 0 ; i < 50 ; i++)
-    // cout << '\n';
-    system("clear");
+    for(int i = 0 ; i < 50 ; i++)
+        printf("\n");
 }
 
 
@@ -381,7 +380,7 @@ void IO_WriteInfo(int *len)
 
 {
     FILE *fp;
-    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","wb"))==NULL)
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","wt"))==NULL)
  
         {
  
@@ -401,8 +400,7 @@ void IO_ReadInfo(int *len)
 {
  
     FILE *fp;
- 
-    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rb"))==NULL)
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rt"))==NULL)
  
     {
         
@@ -411,8 +409,9 @@ void IO_ReadInfo(int *len)
         exit(-1);
         
     }
+    fread(stu,*len,sizeof(struct student),fp)!=1;
+    output(*len);
     
-    fread(stu,sizeof(int),12,fp)!=1;
     fclose(fp);  
     
 }
@@ -421,99 +420,177 @@ void IO_ReadInfo(int *len)
 //r:读 w:在文件头写 a:在文件末尾写
 //r+:可读可写 w+:从新写 a+:可读可写,在文件末尾写
 
-
-
 int main()
 {
-    FILE *fp;
     int choose;
-    int len=0;
-    
-    while(1)
-    {
-        cls();
-        menu();
-        printf("请选择0--9:  ");
-        scanf("%d",&choose);
-        switch(choose)
-        {
-            case 1:
+    int choose1;
+    int len=2;
+    printf("如果您是要录入成绩请输入1,其他操作请输入2:");
+    scanf("%d",&choose1);
+    switch (choose1) {
+        case 1:
+            printf("首先请输入学生人数:");
+            scanf("%d",&len);
+            while(1)
             {
-                printf("首先请输入学生人数:");
-                scanf("%d",&len);
-                input(len);
-                IO_WriteInfo(&len);
-                break;
+                menu();
+                printf("请选择0--9:  ");
+                scanf("%d",&choose);
+                switch(choose)
+                {
+                    case 1:
+                    {
+                        input(len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 2:
+                    {
+                        IO_ReadInfo(&len);
+                        break;
+                    }
+                        
+                    case 3:
+                    {
+                        max(len);
+                        break;
+                    }
+                        
+                    case 4:
+                    {
+                        ave(len);
+                        break;
+                    }
+                        
+                    case 5:
+                    {
+                        sort(len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 6:
+                    {
+                        delete1(&len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 7:
+                    {
+                        insert1(&len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 8:
+                    {
+                        select1(len);
+                        break;
+                    }
+                        
+                    case 9:
+                    {
+                        update(len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                    case 0:
+                    {
+                        exit(0);
+                        break;
+                    }
+                    default:
+                    {
+                        printf("错误的输入，请重新输入：");
+                    }
+                }
             }
-                
-            case 2:
+            break;
+        case 2:
+            while(1)
             {
-                cls();
-                IO_ReadInfo(&len);
-                output(len);
-                break;
+                menu();
+                printf("请选择0--9除了1:  ");
+                scanf("%d",&choose);
+                switch(choose)
+                {
+                    case 1:
+                    {
+                        printf("您不能进行此项操作\n");
+                        break;
+                    }
+                        
+                    case 2:
+                    {
+                        IO_ReadInfo(&len);
+                        break;
+                    }
+                        
+                    case 3:
+                    {
+                        max(len);
+                        break;
+                    }
+                        
+                    case 4:
+                    {
+                        ave(len);
+                        break;
+                    }
+                        
+                    case 5:
+                    {
+                        sort(len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 6:
+                    {
+                        delete1(&len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 7:
+                    {
+                        insert1(&len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                        
+                    case 8:
+                    {
+                        select1(len);
+                        break;
+                    }
+                        
+                    case 9:
+                    {
+                        update(len);
+                        IO_WriteInfo(&len);
+                        break;
+                    }
+                    case 0:
+                    {
+                        exit(0);
+                        break;
+                    }
+                    default:
+                    {
+                        printf("错误的输入，请重新输入：");
+                    }
+                }
             }
-                
-            case 3:
-            {
-                cls();
-                max(len);
-                break;
-            }
-                
-            case 4:
-            {
-                cls();
-                ave(len);
-                break;
-            }
-                
-            case 5:
-            {
-                cls();
-                sort(len);
-                break;
-            }
-                
-            case 6:
-            {
-                cls();
-                delete1(&len);
-                break;
-            }
-                
-            case 7:
-            {
-                cls();
-                insert1(&len);
-                break;
-            }
-                
-            case 8:
-            {
-                cls();
-                select1(len);
-                break;
-            }
-                
-            case 9:
-            {
-                cls();
-                update(len);
-                break;
-            }
-            case 0:
-            {
-                exit(0);
-                break;
-            }
-            default:
-            {
-                cls();
-                printf("错误的输入，请重新输入：");
-            }
-        } 
+            
+        default:
+            break;
     }
+    
+    
+    
     
     return 0;
 }
