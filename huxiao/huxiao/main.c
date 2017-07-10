@@ -445,16 +445,73 @@ int main()
                 IO_WriteInfo(&len);
                 break;
             }
-            case 2:  cls(); IO_ReadInfo(&len);  output(len); break;
-            case 3:  cls(); max(len);    break;
-            case 4:  cls(); ave(len);    break;
-            case 5:  cls(); sort(len);   break;
-            case 6:  cls(); delete1(&len); break;
-            case 7:  cls(); insert1(&len); break;
-            case 8:  cls(); select1(len); break;
-            case 9:  cls(); update(len); break;
-            case 0:  exit(0);  break;
-            default: cls(); printf("错误的输入，请重新输入：");
+                
+            case 2:
+            {
+                cls();
+                IO_ReadInfo(&len);
+                output(len);
+                break;
+            }
+                
+            case 3:
+            {
+                cls();
+                max(len);
+                break;
+            }
+                
+            case 4:
+            {
+                cls();
+                ave(len);
+                break;
+            }
+                
+            case 5:
+            {
+                cls();
+                sort(len);
+                break;
+            }
+                
+            case 6:
+            {
+                cls();
+                delete1(&len);
+                break;
+            }
+                
+            case 7:
+            {
+                cls();
+                insert1(&len);
+                break;
+            }
+                
+            case 8:
+            {
+                cls();
+                select1(len);
+                break;
+            }
+                
+            case 9:
+            {
+                cls();
+                update(len);
+                break;
+            }
+            case 0:
+            {
+                exit(0);
+                break;
+            }
+            default:
+            {
+                cls();
+                printf("错误的输入，请重新输入：");
+            }
         }
     }
     
