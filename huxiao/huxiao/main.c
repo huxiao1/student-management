@@ -376,103 +376,59 @@ void update(int len)
     }
 }
 
-/*
+
 void IO_WriteInfo(int *len)
 
 {
-    
     FILE *fp;
-    
-    int i;
-    
     if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","wb"))==NULL)
-        
-    {
-        
-        printf("不能打开文件!\n");
-        
-        return;
-        
-    }
-    
-    if (fwrite(&len,sizeof(int),1,fp)!=1)
-        
-    {
-        
-        printf("写入文件错误!\n");
-        
-    }
-    
-    for (i=0;i<*len;i++)
-        
-    {
-        
-        if (fwrite(&stu[i],sizeof(struct student),1,fp)!=1)
-            
+ 
         {
-            
-            printf("写入文件错误!\n");
-            
-        }  
-        
-    }      
-    
-    fclose(fp);  
-    
+ 
+            printf("不能打开文件!\n");
+ 
+            exit(-1);
+ 
+        }
+            fwrite(stu, sizeof(struct student), *len, fp);
+            fclose(fp);
+ 
 }
+
 
 void IO_ReadInfo(int *len)
 
 {
-    
+ 
     FILE *fp;
-    
-    int i;
-    
+ 
     if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rb"))==NULL)
-        
+ 
     {
         
         printf("不能打开文件!\n");
         
-        return;
+        exit(-1);
         
     }
     
-    if (fread(&len,sizeof(int),1,fp)!=1)
-        
-    {
-        
-        *len=-1;
-        
-    }
-    
-    else
-        
-    {
-        
-        for(i=0;i<(*len);i++)
-            
-        {
-            
-            fread(&stu[i],sizeof(struct student),1,fp);
-            
-        }  
-        
-    }  
-    
+    fread(stu,sizeof(int),12,fp)!=1;
     fclose(fp);  
     
 }
- */
+
+
+//r:读 w:在文件头写 a:在文件末尾写
+//r+:可读可写 w+:从新写 a+:可读可写,在文件末尾写
+
 
 
 int main()
 {
+    FILE *fp;
     int choose;
     int len=0;
     
-    //IO_ReadInfo(&len);
     while(1)
     {
         cls();
@@ -486,9 +442,10 @@ int main()
                 printf("首先请输入学生人数:");
                 scanf("%d",&len);
                 input(len);
+                IO_WriteInfo(&len);
                 break;
             }
-            case 2:  cls(); output(len); break;
+            case 2:  cls(); IO_ReadInfo(&len);  output(len); break;
             case 3:  cls(); max(len);    break;
             case 4:  cls(); ave(len);    break;
             case 5:  cls(); sort(len);   break;
@@ -499,7 +456,6 @@ int main()
             case 0:  exit(0);  break;
             default: cls(); printf("错误的输入，请重新输入：");
         }
-        //IO_WriteInfo(&len);
     }
     
     return 0;
