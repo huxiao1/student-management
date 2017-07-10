@@ -296,13 +296,14 @@ void update(int len)
         if(strcmp(stu[i].num,&num1)!=0)
         {
             printf("不存在此人!!!!!!!!\n");
-            return;
+            continue;
         }
+        else break;
     }
     printf("提示:'1'代表学号,'2'代表姓名,'3'代表性别,'4'代表语文成绩,'5'代表数学成绩,'6'代表英语成绩\n");
     printf("请输入要修改的信息项目:");
     scanf("%d",&a);
-    switch (a) {
+    switch (a) {  
         case 1:
             printf("请输入修改后的值:");
             scanf("%s",&num2);
@@ -381,27 +382,45 @@ void IO_WriteInfo(int *len)
 {
     FILE *fp;
     if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","wt"))==NULL)
- 
-        {
- 
-            printf("不能打开文件!\n");
- 
-            exit(-1);
- 
-        }
-            fwrite(stu, sizeof(struct student), *len, fp);
-            fclose(fp);
- 
+        
+    {
+        
+        printf("不能打开文件!\n");
+        
+        exit(-1);
+        
+    }
+    fwrite(stu, sizeof(struct student), *len, fp);
+    fclose(fp);
+    
 }
 
+
+void IO_WriteInfo1(int *len)
+
+{
+    FILE *fp;
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","at"))==NULL)
+        
+    {
+        
+        printf("不能打开文件!\n");
+        
+        exit(-1);
+        
+    }
+    fwrite(stu, sizeof(struct student), *len, fp);
+    fclose(fp);
+    
+}
 
 void IO_ReadInfo(int *len)
 
 {
- 
+    
     FILE *fp;
     if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rt"))==NULL)
- 
+        
     {
         
         printf("不能打开文件!\n");
@@ -412,7 +431,7 @@ void IO_ReadInfo(int *len)
     fread(stu,*len,sizeof(struct student),fp)!=1;
     output(*len);
     
-    fclose(fp);  
+    fclose(fp);
     
 }
 
@@ -543,21 +562,21 @@ int main()
                     case 5:
                     {
                         sort(len);
-                        IO_WriteInfo(&len);
+                        IO_WriteInfo1(&len);
                         break;
                     }
                         
                     case 6:
                     {
                         delete1(&len);
-                        IO_WriteInfo(&len);
+                        IO_WriteInfo1(&len);
                         break;
                     }
                         
                     case 7:
                     {
                         insert1(&len);
-                        IO_WriteInfo(&len);
+                        IO_WriteInfo1(&len);
                         break;
                     }
                         
@@ -570,7 +589,7 @@ int main()
                     case 9:
                     {
                         update(len);
-                        IO_WriteInfo(&len);
+                        IO_WriteInfo1(&len);
                         break;
                     }
                     case 0:
