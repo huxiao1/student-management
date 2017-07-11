@@ -23,12 +23,12 @@ void menu1()
     printf("                       本系统的功能如下:\n");
     printf("            ====================================\n");
     printf("    |                胡啸的学生成绩管理系统              |\n");
-    printf("    |                       1                        |\n");
+    printf("    |                      选项1:                    |\n");
     printf("    |                   输入学生成绩                   |\n");
     printf("    |                   修改学生成绩                   |\n");
-    printf("    |                       2                        |\n");
-    printf("    |                   得出学生最大成绩                |\n");
+    printf("    |                      选项2:                      |\n");
     printf("    |                   输出学生成绩                   |\n");
+    printf("    |                   得出学生最大成绩                |\n");
     printf("    |                   得出学生平均成绩                |\n");
     printf("    |                   学生成绩排序                   |\n");
     printf("    |                   删除学生数据                   |\n");
@@ -166,28 +166,84 @@ void delete1(int *len)      //删除函数
     int i = 0;
     int j;
     char wanted[10];
+    int choose5;
+    printf("1.根据学号删除,2.根据姓名删除,3.根据性别删除");
+    scanf("%d",&choose5);
     
-    printf("输入你想删除的学生学号:");
-    scanf("%s",wanted);
-    
-    while(strcmp(stu[i].num,wanted)!=0&&i<(*len))
-        i++;
-    if(i==*len)
-    {
-        printf("不存在此人!\n");
-        return;                             /*返回失败信息*/
+    switch (choose5) {
+        case 1:
+            printf("输入你想删除的学生学号:");
+            scanf("%s",wanted);
+            while(strcmp(stu[i].num,wanted)!=0&&i<(*len))
+                i++;
+            if(i==*len)
+            {
+                printf("不存在此人!\n");
+                return;                             /*返回失败信息*/
+            }
+            else{
+                for(j=i;j<*len-1;j++)                   /*删除操作*/
+                {
+                    strcpy(stu[j].num,stu[j+1].num);
+                    strcpy(stu[j].name,stu[j+1].name);
+                    strcpy(stu[j].sex,stu[j+1].sex);
+                    stu[j].score1=stu[j+1].score1;
+                    stu[j].score2=stu[j+1].score2;
+                    stu[j].score3=stu[j+1].score3;
+                }
+                (*len)--;
+            break;
+            
+                
+        case 2:
+                printf("输入你想删除的学生姓名:");
+                scanf("%s",wanted);
+                while(i<(*len+1))
+                {
+                    if(strcmp(stu[i].name,wanted)==0)
+                       {
+                           for(j=i;j<*len-1;j++)                   /*删除操作*/
+                           {
+                               strcpy(stu[j].num,stu[j+1].num);
+                               strcpy(stu[j].name,stu[j+1].name);
+                               strcpy(stu[j].sex,stu[j+1].sex);
+                               stu[j].score1=stu[j+1].score1;
+                               stu[j].score2=stu[j+1].score2;
+                               stu[j].score3=stu[j+1].score3;
+                           }
+                           (*len)--;
+                       }
+                    i++;
+                }
+            break;
+        
+        case 3:
+                printf("输入你想删除的学生性别:");
+                scanf("%s",wanted);
+                while(i<(*len+1))
+                {
+                    if(strcmp(stu[i].sex,wanted)==0)
+                    {
+                        for(j=i;j<*len-1;j++)                   /*删除操作*/
+                        {
+                            strcpy(stu[j].num,stu[j+1].num);
+                            strcpy(stu[j].name,stu[j+1].name);
+                            strcpy(stu[j].sex,stu[j+1].sex);
+                            stu[j].score1=stu[j+1].score1;
+                            stu[j].score2=stu[j+1].score2;
+                            stu[j].score3=stu[j+1].score3;
+                        }
+                        (*len)--;
+                    }
+                    i++;
+                }
+                
+        default:
+            break;
     }
-    else{
-        for(j=i;j<*len-1;j++)                   /*删除操作*/
-        {
-            strcpy(stu[j].num,stu[j+1].num);
-            strcpy(stu[j].name,stu[j+1].name);
-            strcpy(stu[j].sex,stu[j+1].sex);
-            stu[j].score1=stu[j+1].score1;
-            stu[j].score2=stu[j+1].score2;
-            stu[j].score3=stu[j+1].score3;
-        }
-        (*len)--;
+    
+    
+    
         printf("\t\tcongratulations Successed!\n"); /*返回成功信息*/
         printf("现在的数据库中学生信息如下:");
         output(*len);
@@ -271,7 +327,6 @@ void select1(int len)
 void IO_ReadInfo(int *len)
 
 {
-    
     FILE *fp;
     if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rt"))==NULL)
         
@@ -282,11 +337,33 @@ void IO_ReadInfo(int *len)
         exit(-1);
         
     }
+    
     fread(stu,*len,sizeof(struct student),fp)!=1;
     output(*len);
     
     fclose(fp);
     
+}
+
+int lengths()
+{
+    int i=0;
+    FILE *fp;
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","rt"))==NULL)
+        
+    {
+        
+        printf("不能打开文件!\n");
+        
+        exit(-1);
+        
+    }
+    while (!feof(fp)) {
+        fread(stu,1,sizeof(struct student),fp)!=1;
+        i++;
+    }
+    i=i-1;
+    return i;
 }
 
 
@@ -299,7 +376,6 @@ void IO_WriteInfo(int *len)
     {
         
         printf("不能打开文件!\n");
-        
         exit(-1);
         
     }
@@ -429,7 +505,7 @@ int main()
 {
     int choose = 0;
     int choose1;
-    int len=3;
+    int len=3;       //再次运行程序输出用
     while (1)
     {
         menu1();
@@ -446,6 +522,21 @@ int main()
                         printf("首先请输入学生人数:");
                         scanf("%d",&len);
                         input(len);
+                        
+                        for(int j=0;j<len;j++)
+                            for(int k=j+1;k<len;k++)
+                        {
+                            if(stu[j].num==stu[k].num)
+                            {
+                                printf("有重复学号，请重新输入!");
+                                break;
+                            }
+                            
+                            else
+                                continue;
+                                
+                        }
+                        
                         IO_WriteInfo(&len);
                         break;
                         
@@ -472,6 +563,7 @@ int main()
                             
                         case 1:
                         {
+                            len=lengths();
                             IO_ReadInfo(&len);
                             break;
                         }
