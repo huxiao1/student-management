@@ -308,31 +308,12 @@ void IO_WriteInfo1(int *len)
     
 }
 
-void IO_WriteInfo3(int *len)
 
+
+void update(int *len)
 {
-    FILE *fp;
-    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database2.txt","wt"))==NULL)
-        
-    {
-        
-        printf("不能打开文件!\n");
-        
-        exit(-1);
-        
-    }
-    fwrite(stu, sizeof(struct student), *len, fp);
-    fclose(fp);
-    
-}
-
-
-
-
-void update(int len)
-{
-    IO_ReadInfo(&len);
-    IO_WriteInfo1(&len);
+    IO_ReadInfo(len);
+    IO_WriteInfo1(len);
     int i=0,j=0;
     char num1;
     char num2;
@@ -344,7 +325,7 @@ void update(int len)
     int a;
     printf("请输入要进行修改的学生学号:");
     scanf("%s",&num1);
-    for(i=0;i<len;i++)
+    for(i=0;i<*len;i++)
     {
         if(strcmp(stu[i].num,&num1)==0)
         {
@@ -352,7 +333,7 @@ void update(int len)
         }
         
     }
-    if(i==len)
+    if(i==*len)
     {
         printf("不存在此人!!!!!!!!\n");
         return;
@@ -364,7 +345,7 @@ void update(int len)
         case 1:
             printf("请输入修改后的值:");
             scanf("%s",&num2);
-            for(j=0;j<len;j++)
+            for(j=0;j<*len;j++)
             {
                 if(strcmp(stu[j].num,&num2)==0)
                 {
@@ -372,7 +353,7 @@ void update(int len)
                     return;
                 }
             }
-            if(j==len)
+            if(j==*len)
             {
                 strcpy(stu[i].num,&num2);
             }
@@ -381,7 +362,7 @@ void update(int len)
         case 2:
             printf("请输入修改后的值:");
             scanf("%s",&num3);
-            for(i=0;i<len;i++)
+            for(i=0;i<*len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                 {
@@ -393,7 +374,7 @@ void update(int len)
         case 3:
             printf("请输入修改后的值:");
             scanf("%s",&num4);
-            for(i=0;i<len;i++)
+            for(i=0;i<*len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     strcpy(stu[i].sex,&num4);
@@ -403,7 +384,7 @@ void update(int len)
         case 4:
             printf("请输入修改后的值:");
             scanf("%f",&num5);
-            for(i=0;i<len;i++)
+            for(i=0;i<*len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score1=num5;
@@ -413,7 +394,7 @@ void update(int len)
         case 5:
             printf("请输入修改后的值:");
             scanf("%f",&num6);
-            for(i=0;i<len;i++)
+            for(i=0;i<*len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score2=num6;
@@ -423,7 +404,7 @@ void update(int len)
         case 6:
             printf("请输入修改后的值:");
             scanf("%f",&num7);
-            for(i=0;i<len;i++)
+            for(i=0;i<*len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score3=num7;
@@ -435,7 +416,7 @@ void update(int len)
             printf("您的选择有误!!!!\n");
             break;
     }
-    IO_WriteInfo3(&len);
+    IO_WriteInfo(len);
 }
 
 
@@ -448,108 +429,108 @@ int main()
 {
     int choose = 0;
     int choose1;
-    int len=3;
-    printf("如果您是要录入成绩或修改数据请输入1,其他操作请输入2:");
-    scanf("%d",&choose1);
-    switch (choose1) {
-        case 1:
-        {
-            printf("      ----------1代表输入学生成绩,2代表修改学生信息-------------\n");
-            printf("你的选择是:");
-            scanf("%d",&choose);
-            switch (choose) {
-                case 1:
-                    printf("首先请输入学生人数:");
-                    scanf("%d",&len);
-                    input(len);
-                    IO_WriteInfo(&len);
-                    break;
-                    
-                case 2:
-                    update(len);
-                    output(len);
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-        }
-         
-            
-        case 2:
-            while(1)
+    int len;
+    while (1)
+    {
+        printf("如果您是要录入成绩或修改数据请输入1,其他操作请输入2:");
+        scanf("%d",&choose1);
+        switch (choose1) {
+            case 1:
             {
-                menu();
-                printf("请选择0--7:  ");
+                printf("      ----------1代表输入学生成绩,2代表修改学生信息-------------\n");
+                printf("你的选择是:");
                 scanf("%d",&choose);
-                switch(choose)
-                {
-                        
+                switch (choose) {
                     case 1:
-                    {
-                        IO_ReadInfo(&len);
+                        printf("首先请输入学生人数:");
+                        scanf("%d",&len);
+                        input(len);
+                        IO_WriteInfo(&len);
                         break;
-                    }
                         
                     case 2:
-                    {
-                        max(len);
+                        update(&len);
+                        output(len);
                         break;
-                    }
                         
-                    case 3:
-                    {
-                        ave(len);
-                        break;
-                    }
-                        
-                    case 4:
-                    {
-                        sort(len);
-                        IO_WriteInfo1(&len);
-                        break;
-                    }
-                        
-                    case 5:
-                    {
-                        delete1(&len);
-                        IO_WriteInfo1(&len);
-                        break;
-                    }
-                        
-                    case 6:
-                    {
-                        insert1(&len);
-                        IO_WriteInfo1(&len);
-                        break;
-                    }
-                        
-                    case 7:
-                    {
-                        select1(len);
-                        break;
-                    }
-                        
-                    case 0:
-                    {
-                        exit(0);
-                        break;
-                    }
                     default:
-                    {
-                        printf("错误的输入，请重新输入：");
-                    }
                         break;
                 }
             }
-            
-        default:
-            break;
+                break;
+                
+                
+            case 2:
+                while(1)
+                {
+                    menu();
+                    printf("请选择0--7:  ");
+                    scanf("%d",&choose);
+                    switch(choose)
+                    {
+                            
+                        case 1:
+                        {
+                            IO_ReadInfo(&len);
+                            break;
+                        }
+                            
+                        case 2:
+                        {
+                            max(len);
+                            break;
+                        }
+                            
+                        case 3:
+                        {
+                            ave(len);
+                            break;
+                        }
+                            
+                        case 4:
+                        {
+                            sort(len);
+                            IO_WriteInfo1(&len);
+                            break;
+                        }
+                            
+                        case 5:
+                        {
+                            delete1(&len);
+                            IO_WriteInfo1(&len);
+                            break;
+                        }
+                            
+                        case 6:
+                        {
+                            insert1(&len);
+                            IO_WriteInfo1(&len);
+                            break;
+                        }
+                            
+                        case 7:
+                        {
+                            select1(len);
+                            break;
+                        }
+                            
+                        case 0:
+                        {
+                            exit(0);
+                            break;
+                        }
+                        default:
+                        {
+                            printf("错误的输入，请重新输入：");
+                        }
+                            break;
+                    }
+                }
+                
+            default:
+                break;
+        }
+
     }
-    
-    
-    
-    
     return 0;
 }
