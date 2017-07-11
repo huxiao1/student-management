@@ -298,21 +298,112 @@ void select1(int len)         //选择查询
 {
     int i = 0;
     char wanted[10];
+    int wanted1 = 0;
+    int choose;
     
-    printf("输入你想查找的学生学号:");
-    scanf("%s",wanted);
+    printf("1.查询学号,2.查询姓名,3.查询性别,4.查询语文成绩,5.查询数学成绩,6.查询英语成绩\n");
+    printf("请输入你的选择:");
+    scanf("%d",&choose);
+    switch (choose) {
+        case 1:
+            printf("输入你想查找的学生学号:");
+            scanf("%s",wanted);
+            
+            while(strcmp(stu[i].num,wanted)!=0&&i<len)
+                i++;
+            if(i==len)
+            {
+                printf("不存在此人!\n"); /*返回失败信息*/
+            }
+            else
+            {
+                printf("Congratulations!查找成功\n");
+                printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+            }
+            break;
+         case 2:
+            printf("输入你想查找的学生性名:");
+            scanf("%s",wanted);
+            
+            while(strcmp(stu[i].name,wanted)!=0&&i<len)
+                i++;
+            if(i==len)
+            {
+                printf("不存在此人!\n"); /*返回失败信息*/
+            }
+            else
+            {
+                printf("Congratulations!查找成功\n");
+                printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+            }
+            break;
+        case 3:
+            printf("输入你想查找的学生性别:");
+            scanf("%s",wanted);
+            
+            while(strcmp(stu[i].sex,wanted)!=0&&i<len)
+                i++;
+            if(i==len)
+            {
+                printf("不存在此人!\n"); /*返回失败信息*/
+            }
+            else
+            {
+                printf("Congratulations!查找成功\n");
+                printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+            }
+            break;
+        case 4:
+            printf("输入你想查找的学生语文成绩:");
+            scanf("%d",&wanted1);
+            
+            while (i<len) {
+                if((stu[i].score1)!=wanted1)
+                    i++;
+                else
+                {
+                    printf("Congratulations!查找成功\n");
+                    printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+                    i++;
+                }
+            }
+            break;
+        case 5:
+            printf("输入你想查找的学生数学成绩:");
+            scanf("%d",&wanted1);
+            
+            while (i<len) {
+                if((stu[i].score2)!=wanted1)
+                    i++;
+                else
+                {
+                    printf("Congratulations!查找成功\n");
+                    printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+                    i++;
+                }
+            }
+            break;
+        case 6:
+            printf("输入你想查找的学生英语成绩:");
+            scanf("%d",&wanted1);
+            
+            while (i<len) {
+                if((stu[i].score3)!=wanted1)
+                    i++;
+                else
+                {
+                    printf("Congratulations!查找成功\n");
+                    printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
+                    i++;
+                }
+            }
+
+
+
+        default:
+            break;
+    }
     
-    while(strcmp(stu[i].num,wanted)!=0&&i<len)
-        i++;
-    if(i==len)
-    {
-        printf("不存在此人!\n"); /*返回失败信息*/
-    }
-    else
-    {
-        printf("Congratulations!查找成功\n");
-        printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
-    }
 }
 
 
