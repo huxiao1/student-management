@@ -18,6 +18,25 @@ struct student        //结构体的定义
 
 
 
+void menu1()
+{
+    printf("                       本系统的功能如下:\n");
+    printf("            ====================================\n");
+    printf("    |                胡啸的学生成绩管理系统              |\n");
+    printf("    |                       1                        |\n");
+    printf("    |                   输入学生成绩                   |\n");
+    printf("    |                   修改学生成绩                   |\n");
+    printf("    |                       2                        |\n");
+    printf("    |                   得出学生最大成绩                |\n");
+    printf("    |                   输出学生成绩                   |\n");
+    printf("    |                   得出学生平均成绩                |\n");
+    printf("    |                   学生成绩排序                   |\n");
+    printf("    |                   删除学生数据                   |\n");
+    printf("    |                   插入学生数据                   |\n");
+    printf("    |                   选择学生数据                   |\n");
+    printf("            ====================================\n");
+}
+
 
 void menu()           //菜单
 {
@@ -290,30 +309,11 @@ void IO_WriteInfo(int *len)
 }
 
 
-void IO_WriteInfo1(int *len)
-
-{
-    FILE *fp;
-    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Database.txt","at"))==NULL)
-        
-    {
-        
-        printf("不能打开文件!\n");
-        
-        exit(-1);
-        
-    }
-    fwrite(stu, sizeof(struct student), *len, fp);
-    fclose(fp);
-    
-}
-
-
 
 void update(int *len)
 {
     IO_ReadInfo(len);
-    IO_WriteInfo1(len);
+    //IO_WriteInfo1(len);
     int i=0,j=0;
     char num1;
     char num2;
@@ -429,9 +429,10 @@ int main()
 {
     int choose = 0;
     int choose1;
-    int len;
+    int len=3;
     while (1)
     {
+        menu1();
         printf("如果您是要录入成绩或修改数据请输入1,其他操作请输入2:");
         scanf("%d",&choose1);
         switch (choose1) {
@@ -490,21 +491,21 @@ int main()
                         case 4:
                         {
                             sort(len);
-                            IO_WriteInfo1(&len);
+                            IO_WriteInfo(&len);
                             break;
                         }
                             
                         case 5:
                         {
                             delete1(&len);
-                            IO_WriteInfo1(&len);
+                            IO_WriteInfo(&len);
                             break;
                         }
                             
                         case 6:
                         {
                             insert1(&len);
-                            IO_WriteInfo1(&len);
+                            IO_WriteInfo(&len);
                             break;
                         }
                             
