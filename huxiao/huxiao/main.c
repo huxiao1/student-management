@@ -4,7 +4,7 @@
 
 //语文，数学，英语，总分
 
-struct student        //结构体的定义
+struct student                  //结构体的定义
 {
     char num[200];
     char name[100];
@@ -18,7 +18,7 @@ struct student        //结构体的定义
 
 
 
-void menu1()
+void menu1()                   //初始菜单
 {
     printf("                       本系统的功能如下:\n");
     printf("            ====================================\n");
@@ -26,7 +26,7 @@ void menu1()
     printf("    |                      选项1:                    |\n");
     printf("    |                   输入学生成绩                   |\n");
     printf("    |                   修改学生成绩                   |\n");
-    printf("    |                      选项2:                      |\n");
+    printf("    |                      选项2:                     |\n");
     printf("    |                   输出学生成绩                   |\n");
     printf("    |                   得出学生最大成绩                |\n");
     printf("    |                   得出学生平均成绩                |\n");
@@ -38,7 +38,7 @@ void menu1()
 }
 
 
-void menu()           //菜单
+void menu()                    //第二级菜单
 {
     printf("            ====================================\n");
     printf("    |                  学生成绩管理系统                  |\n");
@@ -114,7 +114,7 @@ void max(int len)             //最大值
 }
 
 
-void ave(int len)           //求平均值
+void ave(int len)             //求平均值
 {
     int i,j,k=0;
     float ave1 = 0.0,ave2 = 0.0,ave3 = 0.0;
@@ -142,7 +142,7 @@ void ave(int len)           //求平均值
 }
 
 
-void sort(int len)         //排序函数
+void sort(int len)           //排序函数
 {
     int i,j;
     struct student temp;
@@ -161,7 +161,8 @@ void sort(int len)         //排序函数
 }
 
 
-void delete1(int *len)      //删除函数
+
+void delete1(int *len)        //删除函数
 {
     int i = 0;
     int j;
@@ -252,16 +253,7 @@ void delete1(int *len)      //删除函数
 }
 
 
-void cls(){
-    //如果编译系统为windows，用此句作为清屏
-    //system("cls");
-    //如果编译系统非windows，尽量用此句清屏
-    for(int i = 0 ; i < 50 ; i++)
-        printf("\n");
-}
-
-
-void insert1(int *len)
+void insert1(int *len)       //插入函数
 {
     struct student stu2;
     int j;
@@ -302,7 +294,7 @@ void insert1(int *len)
 
 
 
-void select1(int len)
+void select1(int len)         //选择查询
 {
     int i = 0;
     char wanted[10];
@@ -310,7 +302,7 @@ void select1(int len)
     printf("输入你想查找的学生学号:");
     scanf("%s",wanted);
     
-    while(strcmp(stu[i].name,wanted)!=0&&i<len)
+    while(strcmp(stu[i].num,wanted)!=0&&i<len)
         i++;
     if(i==len)
     {
@@ -324,7 +316,7 @@ void select1(int len)
 }
 
 
-void IO_ReadInfo(int *len)
+void IO_ReadInfo(int *len)     //读文件
 
 {
     FILE *fp;
@@ -345,7 +337,7 @@ void IO_ReadInfo(int *len)
     
 }
 
-int lengths()
+int lengths()                 //求得文件结构体长度
 {
     int i=0;
     FILE *fp;
@@ -367,7 +359,7 @@ int lengths()
 }
 
 
-void IO_WriteInfo(int *len)
+void IO_WriteInfo(int *len)       //写文件
 
 {
     FILE *fp;
@@ -386,9 +378,9 @@ void IO_WriteInfo(int *len)
 
 
 
-void update(int *len)
+void update(int len)           //更新学生信息
 {
-    IO_ReadInfo(len);
+    IO_ReadInfo(&len);
     //IO_WriteInfo1(len);
     int i=0,j=0;
     char num1;
@@ -401,7 +393,7 @@ void update(int *len)
     int a;
     printf("请输入要进行修改的学生学号:");
     scanf("%s",&num1);
-    for(i=0;i<*len;i++)
+    for(i=0;i<len;i++)
     {
         if(strcmp(stu[i].num,&num1)==0)
         {
@@ -409,7 +401,7 @@ void update(int *len)
         }
         
     }
-    if(i==*len)
+    if(i==len)
     {
         printf("不存在此人!!!!!!!!\n");
         return;
@@ -421,7 +413,7 @@ void update(int *len)
         case 1:
             printf("请输入修改后的值:");
             scanf("%s",&num2);
-            for(j=0;j<*len;j++)
+            for(j=0;j<len;j++)
             {
                 if(strcmp(stu[j].num,&num2)==0)
                 {
@@ -429,7 +421,7 @@ void update(int *len)
                     return;
                 }
             }
-            if(j==*len)
+            if(j==len)
             {
                 strcpy(stu[i].num,&num2);
             }
@@ -438,7 +430,7 @@ void update(int *len)
         case 2:
             printf("请输入修改后的值:");
             scanf("%s",&num3);
-            for(i=0;i<*len;i++)
+            for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                 {
@@ -450,7 +442,7 @@ void update(int *len)
         case 3:
             printf("请输入修改后的值:");
             scanf("%s",&num4);
-            for(i=0;i<*len;i++)
+            for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     strcpy(stu[i].sex,&num4);
@@ -460,7 +452,7 @@ void update(int *len)
         case 4:
             printf("请输入修改后的值:");
             scanf("%f",&num5);
-            for(i=0;i<*len;i++)
+            for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score1=num5;
@@ -470,7 +462,7 @@ void update(int *len)
         case 5:
             printf("请输入修改后的值:");
             scanf("%f",&num6);
-            for(i=0;i<*len;i++)
+            for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score2=num6;
@@ -480,7 +472,7 @@ void update(int *len)
         case 6:
             printf("请输入修改后的值:");
             scanf("%f",&num7);
-            for(i=0;i<*len;i++)
+            for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
                     stu[i].score3=num7;
@@ -492,7 +484,7 @@ void update(int *len)
             printf("您的选择有误!!!!\n");
             break;
     }
-    IO_WriteInfo(len);
+    IO_WriteInfo(&len);
 }
 
 
@@ -539,9 +531,9 @@ int main()
                         
                         IO_WriteInfo(&len);
                         break;
-                        
                     case 2:
-                        update(&len);
+                        len=lengths();
+                        update(len);
                         output(len);
                         break;
                         
