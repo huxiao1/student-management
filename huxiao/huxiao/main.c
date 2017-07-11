@@ -248,6 +248,7 @@ void select1(int len)
     }
 }
 
+
 void IO_ReadInfo(int *len)
 
 {
@@ -330,8 +331,9 @@ void IO_WriteInfo3(int *len)
 
 void update(int len)
 {
-    IO_WriteInfo(&len);
-    int i=0;
+    IO_ReadInfo(&len);
+    IO_WriteInfo1(&len);
+    int i=0,j=0;
     char num1;
     char num2;
     char num3;
@@ -346,9 +348,14 @@ void update(int len)
     {
         if(strcmp(stu[i].num,&num1)==0)
         {
-            printf("不存在此人!!!!!!!!\n");
-            return;
+            break;
         }
+        
+    }
+    if(i==len)
+    {
+        printf("不存在此人!!!!!!!!\n");
+        return;
     }
     printf("提示:'1'代表学号,'2'代表姓名,'3'代表性别,'4'代表语文成绩,'5'代表数学成绩,'6'代表英语成绩\n");
     printf("请输入要修改的信息项目:");
@@ -357,15 +364,17 @@ void update(int len)
         case 1:
             printf("请输入修改后的值:");
             scanf("%s",&num2);
-            for(i=0;i<len;i++)
+            for(j=0;j<len;j++)
             {
-                if(strcmp(stu[i].num,&num1)==0)
-                    strcpy(stu[i].num,&num2);
-                else
+                if(strcmp(stu[j].num,&num2)==0)
                 {
-                    printf("\n\n               此学号已经存在!\n");
+                    printf("此学号已经存在");
                     return;
                 }
+            }
+            if(j==len)
+            {
+                strcpy(stu[i].num,&num2);
             }
             printf("                恭喜,修改成功\n");
             break;
@@ -375,7 +384,9 @@ void update(int len)
             for(i=0;i<len;i++)
             {
                 if(strcmp(stu[i].num,&num1)==0)
+                {
                     strcpy(stu[i].name,&num3);
+                }
             }
             printf("                恭喜,修改成功\n");
             break;
