@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+void sort(int len);
 //语文，数学，英语，总分
 
 struct student                  //结构体的定义
@@ -26,11 +27,12 @@ void menu1()                   //初始菜单
     printf("    |                      选项1:                    |\n");
     printf("    |                   输入学生成绩                   |\n");
     printf("    |                   修改学生成绩                   |\n");
-    printf("    |                      选项2:                     |\n");
-    printf("    |                   输出学生成绩                   |\n");
-    printf("    |                   得出学生最大成绩                |\n");
-    printf("    |                   得出学生平均成绩                |\n");
-    printf("    |                   学生成绩排序                   |\n");
+    printf("    |                      学生排序                   |\n");
+    printf("    |                      选项2:                    |\n");
+    printf("    |                   输出学生成绩                  |\n");
+    printf("    |                得出学生最大成绩                  |\n");
+    printf("    |                得出学生平均成绩                  |\n");
+    printf("    |                      学生排序                   |\n");
     printf("    |                   删除学生数据                   |\n");
     printf("    |                   插入学生数据                   |\n");
     printf("    |                   选择学生数据                   |\n");
@@ -54,16 +56,40 @@ void menu()                    //第二级菜单
 }
 
 
-void input(int len)           //输入函数
+int chang(char a[100])
 {
-    int i=0;
+    int i= 0;
+    gets(a);
+    while(a[i] != '\0')
+        i++;
+    printf("你输入的字符串的长度为%d\n",i);
+    return i;
+}
+
+
+void input(int len)            //输入函数
+{
+    int k;
     do
     {
-        printf("请输入第%d个学生的 学号 姓名 性别 语文成绩 数学成绩 英语成绩\n",i+1);
-        scanf("%s %s %s %f %f %f",stu[i].num,stu[i].name,stu[i].sex,&stu[i].score1,&stu[i].score2,&stu[i].score3);
-        i++;
+        for(k=0;k<len;k++)
+        {
+            
+                printf("请输入第%d个学生的学号 姓名 性别 语文成绩 数学成绩 英语成绩\n",k+1);
+                scanf("%s %s %s %f %f %f",stu[k].num,stu[k].name,stu[k].sex,&stu[k].score1,&stu[k].score2,&stu[k].score3);
+            printf("%lu\n",strlen(stu[k].num));
+            if((strlen(stu[k].num)<5)&&(stu[k].num>='0')&&(stu[k].num<='9'))
+                continue;
+            else
+            {
+                printf("输入有误!");
+                exit(-1);
+            }
+            
+        }
+        
     }
-    while(i<=len-1);
+    while(k<=len-1);
 }
 
 
@@ -212,7 +238,8 @@ void delete1(int *len)        //删除函数
     int j;
     char wanted[10];
     int choose5;
-    printf("1.根据学号删除,2.根据姓名删除,3.根据性别删除");
+    printf("1.根据学号删除,2.根据姓名删除,3.根据性别删除\n");
+    printf("请输入你的选择:");
     scanf("%d",&choose5);
     
     switch (choose5) {
@@ -282,13 +309,11 @@ void delete1(int *len)        //删除函数
                     }
                     i++;
                 }
+                break;
                 
         default:
             break;
     }
-    
-    
-    
         printf("\t\tcongratulations Successed!\n"); /*返回成功信息*/
         printf("现在的数据库中学生信息如下:");
         output(*len);
@@ -643,6 +668,7 @@ int main()
         menu1();
         printf("如果您是要录入成绩或修改数据请输入1,其他操作请输入2:");
         scanf("%d",&choose1);
+        system("clear");
         switch (choose1) {
             case 1:
             {
@@ -655,26 +681,34 @@ int main()
                         scanf("%d",&len);
                         input(len);
                         
-                        for(int j=0;j<len;j++)
+                        for(int j=0;j<len;j++)             //判断有无重复学号
                             for(int k=j+1;k<len;k++)
                         {
-                            if(stu[j].num==stu[k].num)
+                            if(strcmp(stu[j].num,stu[k].num)==0)
                             {
-                                printf("有重复学号，请重新输入!");
+                                printf("有重复学号，请重新输入!\n");
                                 break;
                             }
-                            
                             else
                                 continue;
+                            
                                 
-                        }
+                            }
+                        
                         
                         IO_WriteInfo(&len);
+                        system("clear");
                         break;
                     case 2:
+                        system("clear");
                         len=lengths();
                         update(len);
                         output(len);
+                        break;
+                    case 3:
+                        system("clear");
+                        sort(len);
+                        IO_WriteInfo(&len);
                         break;
                         
                     default:
@@ -695,6 +729,7 @@ int main()
                             
                         case 1:
                         {
+                            system("clear");
                             len=lengths();
                             IO_ReadInfo(&len);
                             break;
@@ -702,18 +737,21 @@ int main()
                             
                         case 2:
                         {
+                            system("clear");
                             max(len);
                             break;
                         }
                             
                         case 3:
                         {
+                            system("clear");
                             ave(len);
                             break;
                         }
                             
                         case 4:
                         {
+                            system("clear");
                             sort(len);
                             IO_WriteInfo(&len);
                             break;
@@ -721,6 +759,7 @@ int main()
                             
                         case 5:
                         {
+                            system("clear");
                             delete1(&len);
                             IO_WriteInfo(&len);
                             break;
@@ -728,6 +767,7 @@ int main()
                             
                         case 6:
                         {
+                            system("clear");
                             insert1(&len);
                             IO_WriteInfo(&len);
                             break;
@@ -735,6 +775,7 @@ int main()
                             
                         case 7:
                         {
+                            system("clear");
                             select1(len);
                             break;
                         }
