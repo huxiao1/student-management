@@ -482,100 +482,105 @@ void update(int len)           //更新学生信息
     float num6;
     float num7;
     int a;
-    printf("请输入要进行修改的学生学号:");
-    scanf("%s",&num1);
-    for(i=0;i<len;i++)
-    {
-        if(strcmp(stu[i].num,&num1)==0)
+    char choose8 = 'Y';
+    while (choose8=='Y'||choose8=='y') {
+        printf("请输入要进行修改的学生学号:");
+        scanf("%s",&num1);
+        for(i=0;i<len;i++)
         {
-            break;
-        }
-        
-    }
-    if(i==len)
-    {
-        printf("不存在此人!!!!!!!!\n");
-        return;
-    }
-    printf("提示:'1'代表学号,'2'代表姓名,'3'代表性别,'4'代表语文成绩,'5'代表数学成绩,'6'代表英语成绩\n");
-    printf("请输入要修改的信息项目:");
-    scanf("%d",&a);
-    switch (a) {
-        case 1:
-            printf("请输入修改后的值:");
-            scanf("%s",&num2);
-            for(j=0;j<len;j++)
+            if(strcmp(stu[i].num,&num1)==0)
             {
-                if(strcmp(stu[j].num,&num2)==0)
-                {
-                    printf("此学号已经存在");
-                    return;
-                }
+                break;
             }
-            if(j==len)
-            {
-                strcpy(stu[i].num,&num2);
-            }
-            printf("                恭喜,修改成功\n");
-            break;
-        case 2:
-            printf("请输入修改后的值:");
-            scanf("%s",&num3);
-            for(i=0;i<len;i++)
-            {
-                if(strcmp(stu[i].num,&num1)==0)
-                {
-                    strcpy(stu[i].name,&num3);
-                }
-            }
-            printf("                恭喜,修改成功\n");
-            break;
-        case 3:
-            printf("请输入修改后的值:");
-            scanf("%s",&num4);
-            for(i=0;i<len;i++)
-            {
-                if(strcmp(stu[i].num,&num1)==0)
-                    strcpy(stu[i].sex,&num4);
-            }
-            printf("                恭喜,修改成功\n");
-            break;
-        case 4:
-            printf("请输入修改后的值:");
-            scanf("%f",&num5);
-            for(i=0;i<len;i++)
-            {
-                if(strcmp(stu[i].num,&num1)==0)
-                    stu[i].score1=num5;
-            }
-            printf("                恭喜,修改成功\n");
-            break;
-        case 5:
-            printf("请输入修改后的值:");
-            scanf("%f",&num6);
-            for(i=0;i<len;i++)
-            {
-                if(strcmp(stu[i].num,&num1)==0)
-                    stu[i].score2=num6;
-            }
-            printf("                恭喜,修改成功\n");
-            break;
-        case 6:
-            printf("请输入修改后的值:");
-            scanf("%f",&num7);
-            for(i=0;i<len;i++)
-            {
-                if(strcmp(stu[i].num,&num1)==0)
-                    stu[i].score3=num7;
-            }
-            printf("                恭喜,修改成功\n");
-            break;
             
-        default:
-            printf("您的选择有误!!!!\n");
-            break;
+        }
+        if(i==len)
+        {
+            printf("不存在此人!!!!!!!!\n");
+            return;
+        }
+        printf("提示:'1'代表学号,'2'代表姓名,'3'代表性别,'4'代表语文成绩,'5'代表数学成绩,'6'代表英语成绩\n");
+        printf("请输入要修改的信息项目:");
+        scanf("%d",&a);
+        switch (a) {
+            case 1:
+                printf("请输入修改后的学号:");
+                scanf("%s",&num2);
+                for(j=0;j<len;j++)
+                {
+                    if(strcmp(stu[j].num,&num2)==0)
+                    {
+                        printf("此学号已经存在");
+                        return;
+                    }
+                }
+                if(j==len)
+                {
+                    strcpy(stu[i].num,&num2);
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+            case 2:
+                printf("请输入修改后的姓名:");
+                scanf("%s",&num3);
+                for(i=0;i<len;i++)
+                {
+                    if(strcmp(stu[i].num,&num1)==0)
+                    {
+                        strcpy(stu[i].name,&num3);
+                    }
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+            case 3:
+                printf("请输入修改后的性别:");
+                scanf("%s",&num4);
+                for(i=0;i<len;i++)
+                {
+                    if(strcmp(stu[i].num,&num1)==0)
+                        strcpy(stu[i].sex,&num4);
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+            case 4:
+                printf("请输入修改后的语文成绩:");
+                scanf("%f",&num5);
+                for(i=0;i<len;i++)
+                {
+                    if(strcmp(stu[i].num,&num1)==0)
+                        stu[i].score1=num5;
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+            case 5:
+                printf("请输入修改后的数学成绩:");
+                scanf("%f",&num6);
+                for(i=0;i<len;i++)
+                {
+                    if(strcmp(stu[i].num,&num1)==0)
+                        stu[i].score2=num6;
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+            case 6:
+                printf("请输入修改后的英语成绩:");
+                scanf("%f",&num7);
+                for(i=0;i<len;i++)
+                {
+                    if(strcmp(stu[i].num,&num1)==0)
+                        stu[i].score3=num7;
+                }
+                printf("                恭喜,修改成功\n");
+                break;
+                
+            default:
+                printf("您的选择有误!!!!\n");
+                break;
+        }
+        printf("continue?(Y/N),支持小写");
+        scanf("%s",&choose8);
     }
-    IO_WriteInfo(&len);
+        IO_WriteInfo(&len);
 }
 
 
