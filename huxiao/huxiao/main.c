@@ -141,26 +141,70 @@ void ave(int len)             //求平均值
     printf("英语平均成绩为:%f\n",ave3);
 }
 
-
-void sort(int len)           //排序函数
+/*选择排序
+score[j],score[j+1],...score[N-1];
+for(j=0;j<=N-2;j++)
 {
-    int i,j;
-    struct student temp;
-    for(i=0;i<len-1;i++)
-        for(j=0;j<=len-i-1;j++)
-        {
-            if(stu[j].sum<stu[j+1].sum)
-            {
-                temp=stu[j];
-                stu[j]=stu[j+1];
-                stu[j+1]=temp;
-            }
-        }
-    printf("根据总分排序为:");
-    output(len);
+    k=j;
+    for(i=j+1;i<N;i++)
+    {
+        if(score[i]<score[k])
+            k=i;
+    }
+    if(k!=j)
+    {
+        t=score[j];
+        score[j]=score[k];
+        score[k]=t;
+    }
+    
 }
+ */
 
-
+void sort(int len)
+{
+    int choose,i,j;
+    struct student temp;
+    printf("1.按学号排序,2.按总成绩排序\n");
+    printf("请输入你的选择:");
+    scanf("%d",&choose);
+    switch (choose) {
+        case 1:
+        {
+            for(i=0;i<len-1;i++)
+                for(j=0;j<=len-i-1;j++)
+                {
+                    if(strcmp(stu[j].num,stu[j+1].num)<0)
+                    {
+                        temp=stu[j];
+                        stu[j]=stu[j+1];
+                        stu[j+1]=temp;
+                    }
+                }
+            printf("根据学号排序为:");
+            output(len);
+        }
+            break;
+        case 2:
+        {
+            for(i=0;i<len-1;i++)
+                for(j=0;j<=len-i-1;j++)
+                {
+                    if(stu[j].sum<stu[j+1].sum)
+                    {
+                        temp=stu[j];
+                        stu[j]=stu[j+1];
+                        stu[j+1]=temp;
+                    }
+                }
+            printf("根据总分排序为:");
+            output(len);
+        }
+            
+        default:
+            break;
+    }
+}
 
 void delete1(int *len)        //删除函数
 {
