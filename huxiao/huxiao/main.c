@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 void sort(int len);
 //语文，数学，英语，总分
 
@@ -23,19 +22,19 @@ void menu1()                   //初始菜单
 {
     printf("                       本系统的功能如下:\n");
     printf("            ====================================\n");
-    printf("    |                胡啸的学生成绩管理系统              |\n");
-    printf("    |                      选项1:                    |\n");
-    printf("    |                   输入学生成绩                   |\n");
-    printf("    |                   修改学生成绩                   |\n");
-    printf("    |                      学生排序                   |\n");
-    printf("    |                      选项2:                    |\n");
-    printf("    |                   输出学生成绩                  |\n");
-    printf("    |                得出学生最大成绩                  |\n");
-    printf("    |                得出学生平均成绩                  |\n");
-    printf("    |                      学生排序                   |\n");
-    printf("    |                   删除学生数据                   |\n");
-    printf("    |                   插入学生数据                   |\n");
-    printf("    |                   选择学生数据                   |\n");
+    printf("    |                胡啸的学生成绩管理系统              \n");
+    printf("    |                      选项1:                    \n");
+    printf("    |                   输入学生成绩                   \n");
+    printf("    |                   修改学生成绩                   \n");
+    printf("    |                      学生排序                   \n");
+    printf("    |                      选项2:                    \n");
+    printf("    |                   输出学生成绩                  \n");
+    printf("    |                得出学生最大成绩                  \n");
+    printf("    |                得出学生平均成绩                  \n");
+    printf("    |                      学生排序                   \n");
+    printf("    |                   删除学生数据                   \n");
+    printf("    |                   插入学生数据                   \n");
+    printf("    |                   选择学生数据                   \n");
     printf("            ====================================\n");
 }
 
@@ -43,27 +42,16 @@ void menu1()                   //初始菜单
 void menu()                    //第二级菜单
 {
     printf("            ====================================\n");
-    printf("    |                  学生成绩管理系统                  |\n");
-    printf("    |               1    输出学生成绩                   |\n");
-    printf("    |               2    得出学生最大成绩                |\n");
-    printf("    |               3    得出学生平均成绩                |\n");
-    printf("    |               4    学生成绩排序                   |\n");
-    printf("    |               5    删除学生数据                   |\n");
-    printf("    |               6    插入学生数据                   |\n");
-    printf("    |               7    选择学生数据                   |\n");
-    printf("    |               0    退出管理系统                   |\n");
+    printf("    |                  学生成绩管理系统                  \n");
+    printf("    |               1    输出学生成绩                   \n");
+    printf("    |               2    得出学生最大成绩                \n");
+    printf("    |               3    得出学生平均成绩                \n");
+    printf("    |               4    学生成绩排序                   \n");
+    printf("    |               5    删除学生数据                   \n");
+    printf("    |               6    插入学生数据                   \n");
+    printf("    |               7    选择学生数据                   \n");
+    printf("    |               0    退出管理系统                   \n");
     printf("            ====================================\n");
-}
-
-
-int chang(char a[100])
-{
-    int i= 0;
-    gets(a);
-    while(a[i] != '\0')
-        i++;
-    printf("你输入的字符串的长度为%d\n",i);
-    return i;
 }
 
 
@@ -75,14 +63,19 @@ void input(int len)            //输入函数
         for(k=0;k<len;k++)
         {
             
-                printf("请输入第%d个学生的学号 姓名 性别 语文成绩 数学成绩 英语成绩\n",k+1);
+                printf("请输入第%d个学生的学号 姓名 性别(m or w) 语文成绩 数学成绩 英语成绩\n",k+1);
                 scanf("%s %s %s %f %f %f",stu[k].num,stu[k].name,stu[k].sex,&stu[k].score1,&stu[k].score2,&stu[k].score3);
             printf("%lu\n",strlen(stu[k].num));
-            if((strlen(stu[k].num)<5)&&(stu[k].num>='0')&&(stu[k].num<='9'))
+            if((strlen(stu[k].num)<5))   //&&(stu[k].num>='0')&&(stu[k].num<='100')
                 continue;
             else
             {
-                printf("输入有误!");
+                printf("输入学号有误!");
+                exit(-1);
+            }
+            if(stu[k].sex!='m'||stu[k].sex!='w')
+            {
+                printf("性别输入有误!");
                 exit(-1);
             }
             
@@ -331,7 +324,11 @@ void insert1(int *len)       //插入函数
     
     printf("请依次输入你想插入的学生的 学号 姓名 性别 语文成绩 数学成绩 英语成绩\n");
     scanf("%s %s %s %f %f %f",stu2.num,stu2.name,stu2.sex,&stu2.score1,&stu2.score2,&stu2.score3);
-    
+    if((strlen(stu2.num)>=5)||(stu2.num<'0')||(stu2.num>'9'))
+    {
+        printf("输入学号有误!");
+        exit(-1);
+    }
     printf("输入你想插入的位置:");
     scanf("%d",&weizhi);
     
@@ -662,7 +659,37 @@ int main()
 {
     int choose = 0;
     int choose1;
+    char system_mima[20]="123456";
+    char user_mima;
+    char pwd[10];
+    int k=0;
     int len=3;       //再次运行程序输出用
+    //////////////界面登录设置
+    printf("          ------欢迎使用胡啸的学生成绩管理系统!------\n");
+    while (1) {
+        printf("请输入密码:");
+        for(k=0;;)
+        {
+            user_mima=getchar();
+            if((user_mima)=='\n')
+                break;
+            pwd[k]=user_mima;
+            printf("*");
+        }
+        pwd[k]='\0';
+        
+        if(strcmp(system_mima,&user_mima)!=0)
+        {
+            printf("输入的密码不正确!\n请重新输入密码:");
+        }
+        else
+        {
+            printf("                         登录成功!\n\n");
+            break;
+        }
+    }
+    
+    //////////登录成功进行以下操作
     while (1)
     {
         menu1();
