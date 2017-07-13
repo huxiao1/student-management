@@ -15,6 +15,11 @@ struct student                  //结构体的定义
     float sum;
 }stu[100];
 
+struct user1
+{
+    char username[20];      //用户名称
+    char adminaster[20];    //用户密码
+}use[10];
 
 
 
@@ -63,8 +68,8 @@ void input(int len)            //输入函数
         for(k=0;k<len;k++)
         {
             
-                printf("请输入第%d个学生的学号 姓名 性别(m or w) 语文成绩 数学成绩 英语成绩\n",k+1);
-                scanf("%s %s %s %f %f %f",stu[k].num,stu[k].name,stu[k].sex,&stu[k].score1,&stu[k].score2,&stu[k].score3);
+            printf("请输入第%d个学生的学号 姓名 性别(m or w) 语文成绩 数学成绩 英语成绩\n",k+1);
+            scanf("%s %s %s %f %f %f",stu[k].num,stu[k].name,stu[k].sex,&stu[k].score1,&stu[k].score2,&stu[k].score3);
             printf("%lu\n",strlen(stu[k].num));
             if((strlen(stu[k].num)<5))   //&&(stu[k].num>='0')&&(stu[k].num<='100')
                 continue;
@@ -161,23 +166,23 @@ void ave(int len)             //求平均值
 }
 
 /*选择排序
-score[j],score[j+1],...score[N-1];
-for(j=0;j<=N-2;j++)
-{
-    k=j;
-    for(i=j+1;i<N;i++)
-    {
-        if(score[i]<score[k])
-            k=i;
-    }
-    if(k!=j)
-    {
-        t=score[j];
-        score[j]=score[k];
-        score[k]=t;
-    }
-    
-}
+ score[j],score[j+1],...score[N-1];
+ for(j=0;j<=N-2;j++)
+ {
+ k=j;
+ for(i=j+1;i<N;i++)
+ {
+ if(score[i]<score[k])
+ k=i;
+ }
+ if(k!=j)
+ {
+ t=score[j];
+ score[j]=score[k];
+ score[k]=t;
+ }
+ 
+ }
  */
 
 void sort(int len)
@@ -257,32 +262,32 @@ void delete1(int *len)        //删除函数
                     stu[j].score3=stu[j+1].score3;
                 }
                 (*len)--;
-            break;
-            
+                break;
                 
-        case 2:
+                
+            case 2:
                 printf("输入你想删除的学生姓名:");
                 scanf("%s",wanted);
                 while(i<(*len+1))
                 {
                     if(strcmp(stu[i].name,wanted)==0)
-                       {
-                           for(j=i;j<*len-1;j++)                   /*删除操作*/
-                           {
-                               strcpy(stu[j].num,stu[j+1].num);
-                               strcpy(stu[j].name,stu[j+1].name);
-                               strcpy(stu[j].sex,stu[j+1].sex);
-                               stu[j].score1=stu[j+1].score1;
-                               stu[j].score2=stu[j+1].score2;
-                               stu[j].score3=stu[j+1].score3;
-                           }
-                           (*len)--;
-                       }
+                    {
+                        for(j=i;j<*len-1;j++)                   /*删除操作*/
+                        {
+                            strcpy(stu[j].num,stu[j+1].num);
+                            strcpy(stu[j].name,stu[j+1].name);
+                            strcpy(stu[j].sex,stu[j+1].sex);
+                            stu[j].score1=stu[j+1].score1;
+                            stu[j].score2=stu[j+1].score2;
+                            stu[j].score3=stu[j+1].score3;
+                        }
+                        (*len)--;
+                    }
                     i++;
                 }
-            break;
-        
-        case 3:
+                break;
+                
+            case 3:
                 printf("输入你想删除的学生性别:");
                 scanf("%s",wanted);
                 while(i<(*len+1))
@@ -304,13 +309,13 @@ void delete1(int *len)        //删除函数
                 }
                 break;
                 
-        default:
-            break;
-    }
-        printf("\t\tcongratulations Successed!\n"); /*返回成功信息*/
-        printf("现在的数据库中学生信息如下:");
-        output(*len);
-        printf("\n");
+            default:
+                break;
+            }
+            printf("\t\tcongratulations Successed!\n"); /*返回成功信息*/
+            printf("现在的数据库中学生信息如下:");
+            output(*len);
+            printf("\n");
     }
 }
 
@@ -387,7 +392,7 @@ void select1(int len)         //选择查询
                 printf("%s %s %s %f %f %f\n",stu[i].num,stu[i].name,stu[i].sex,stu[i].score1,stu[i].score2,stu[i].score3);
             }
             break;
-         case 2:
+        case 2:
             printf("输入你想查找的学生性名:");
             scanf("%s",wanted);
             
@@ -463,9 +468,9 @@ void select1(int len)         //选择查询
                     i++;
                 }
             }
-
-
-
+            
+            
+            
         default:
             break;
     }
@@ -494,6 +499,26 @@ void IO_ReadInfo(int *len)     //读文件
     
 }
 
+void IO_ReadInfo2(int *len2)     //读文件
+
+{
+    FILE *fp;
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Userbase.txt","rt"))==NULL)
+        
+    {
+        
+        printf("不能打开文件!\n");
+        
+        exit(-1);
+        
+    }
+    
+    fread(use,*len2,sizeof(struct user1),fp)!=1;
+    
+    fclose(fp);
+    
+}
+
 int lengths()                 //求得文件结构体长度
 {
     int i=0;
@@ -515,6 +540,27 @@ int lengths()                 //求得文件结构体长度
     return i;
 }
 
+int lengths2()                 //求得文件结构体长度
+{
+    int i=0;
+    FILE *fp;
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Userbase.txt","rt"))==NULL)
+        
+    {
+        
+        printf("不能打开文件!\n");
+        
+        exit(-1);
+        
+    }
+    while (!feof(fp)) {
+        fread(use,1,sizeof(struct user1),fp)!=1;
+        i++;
+    }
+    i=i-1;
+    return i;
+}
+
 
 void IO_WriteInfo(int *len)       //写文件
 
@@ -529,6 +575,23 @@ void IO_WriteInfo(int *len)       //写文件
         
     }
     fwrite(stu, sizeof(struct student), *len, fp);
+    fclose(fp);
+    
+}
+
+void IO_WriteInfo2(int *len2)       //写文件
+
+{
+    FILE *fp;
+    if ((fp=fopen("/Users/huxiao/Desktop/github/student-management/Userbase.txt","wt"))==NULL)
+        
+    {
+        
+        printf("不能打开文件!\n");
+        exit(-1);
+        
+    }
+    fwrite(use, sizeof(struct user1), *len2, fp);
     fclose(fp);
     
 }
@@ -646,9 +709,8 @@ void update(int len)           //更新学生信息
         printf("continue?(Y/N),支持小写");
         scanf("%s",&choose8);
     }
-        IO_WriteInfo(&len);
+    IO_WriteInfo(&len);
 }
-
 
 
 
@@ -658,36 +720,88 @@ void update(int len)           //更新学生信息
 int main()
 {
     int choose = 0;
-    int choose1;
-    char system_mima[20]="123456";
-    char user_mima;
-    char pwd[10];
-    int k=0;
-    int len=3;       //再次运行程序输出用
+    int choose1,choose2;
+    int flag=0;
+    //char system_mima[20]="123456",user_mima[20];
+    char c;
+    int i,j,k=0;
+    int len=0;     //学生人数
+    int len2=0;   //用户个数
+    struct user1 user_number;
     //////////////界面登录设置
     printf("          ------欢迎使用胡啸的学生成绩管理系统!------\n");
-    while (1) {
-        printf("请输入密码:");
-        for(k=0;;)
-        {
-            user_mima=getchar();
-            if((user_mima)=='\n')
-                break;
-            pwd[k]=user_mima;
-            printf("*");
-        }
-        pwd[k]='\0';
+    while(flag!=1)
+    {
+        IO_ReadInfo2(&len2);
+        printf("请选择操作类别号:1-注册,2-登录,3-退出系统\n");
+            printf("请输入你的选择:");
+            scanf("%d",&choose2);
+            switch (choose2)
+            {
+                case 1:
+                {
+                    printf("您选择了注册功能");
+                    printf("请输入用户名:");
+                    scanf("%s",user_number.username);
+                    printf("请输入密码:");
+                    scanf("%s",user_number.adminaster);
+                    printf("Congratulations!注册成功!\n");
+                    use[len2++]=user_number;
+                }
+                    IO_WriteInfo2(&len2);
+                    break;
+                case 2:
+                {
+                    printf("您选择了登录功能");
+                    len2=lengths2();
+                    printf("请输入用户名和密码:");
+                    scanf("%s %s",user_number.username,user_number.adminaster);//假设没有此user
+                    for(i=0;i<len2;i++)
+                    {
+                        if((strcmp(use[i].username,user_number.username)==0)&&(strcmp(use[i].adminaster,user_number.adminaster)==0))
+                        {
+                            flag=1;
+                            printf("登录成功!\n");
+                            break;
+                        }
+                    }
+                    if (flag!=1)
+                        printf("用户名或密码错误!");
+                }
+                    break;
+                case 3:
+                {
+                    printf("欢迎下次再来");
+                    exit(-1);
+                }
+                    break;
+            }
         
-        if(strcmp(system_mima,&user_mima)!=0)
-        {
-            printf("输入的密码不正确!\n请重新输入密码:");
-        }
-        else
-        {
-            printf("                         登录成功!\n\n");
-            break;
-        }
     }
+    
+    /*  while (1) {
+     printf("请输入密码:");
+     for(k=0;;)
+     {
+     c=getch();
+     if((c)=='\r')
+     break;
+     user_mima[k++]=c;
+     printf("*");
+     }
+     user_mima[k]='\0';
+     
+     if(strcmp(system_mima,&user_mima)!=0)
+     {
+     printf("\n输入的密码不正确,请重新输入密码!\n");
+     }
+     else
+     {
+     printf("             \n登录成功!\n\n");
+     break;
+     }
+     }
+     */
     
     //////////登录成功进行以下操作
     while (1)
@@ -708,17 +822,17 @@ int main()
                         scanf("%d",&len);
                         input(len);
                         
-                        for(int j=0;j<len;j++)             //判断有无重复学号
-                            for(int k=j+1;k<len;k++)
-                        {
-                            if(strcmp(stu[j].num,stu[k].num)==0)
+                        for(j=0;j<len;j++)             //判断有无重复学号
+                            for(k=j+1;k<len;k++)
                             {
-                                printf("有重复学号，请重新输入!\n");
-                                break;
-                            }
-                            else
-                                continue;
-                            
+                                if(strcmp(stu[j].num,stu[k].num)==0)
+                                {
+                                    printf("有重复学号，请重新输入!\n");
+                                    break;
+                                }
+                                else
+                                    continue;
+                                
                                 
                             }
                         
@@ -823,7 +937,7 @@ int main()
             default:
                 break;
         }
-
+        
     }
     return 0;
 }
