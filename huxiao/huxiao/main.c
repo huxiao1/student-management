@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <Carbon/Carbon.h>
+//#include <Events.h>
+
+
 void sort(int len);
 //语文，数学，英语，总分
 
@@ -721,10 +725,10 @@ int main()
 {
     int choose = 0;
     int choose1,choose2;
+    char c;
     int flag=0;
     //char system_mima[20]="123456",user_mima[20];
-    char c;
-    int i,j,k=0;
+    int i,j,k,l=0;
     int len=0;     //学生人数
     int len2=0;   //用户个数
     struct user1 user_number;
@@ -740,13 +744,54 @@ int main()
             {
                 case 1:
                 {
-                    printf("您选择了注册功能");
+                    printf("您选择了注册功能\n");
                     printf("请输入用户名:");
                     scanf("%s",user_number.username);
-                    printf("请输入密码:");
-                    scanf("%s",user_number.adminaster);
-                    printf("Congratulations!注册成功!\n");
-                    use[len2++]=user_number;
+                    for(l=0;l<lengths2();l++)
+                    {
+                        if(strcmp(user_number.username,use[l].username)==0)
+                        {
+                            printf("已存在的用户名!\n");
+                            break;
+                        }
+                        else
+                            continue;
+                    }
+                    if(l==lengths2())
+                    {
+                        printf("请输入密码:");
+                        scanf("%s",user_number.adminaster);
+                        printf("Congratulations!注册成功!\n");
+                        use[len2++]=user_number;
+                    }
+                    else
+                    {
+                        printf("您选择了注册功能\n");
+                        printf("请输入用户名:");
+                        scanf("%s",user_number.username);
+                        for(l=0;l<lengths2();l++)
+                        {
+                            if(strcmp(user_number.username,use[l].username)==0)
+                            {
+                                printf("已存在的用户名!\n");
+                                break;
+                            }
+                            else
+                                continue;
+                        }
+                        if(l==lengths2())
+                        {
+                            printf("请输入密码:");
+                            scanf("%s",user_number.adminaster);
+                            printf("Congratulations!注册成功!\n");
+                            use[len2++]=user_number;
+                        }
+                        else
+                        {
+                            printf("您已经两次没有输入正确，系统自动结束进程!\n");
+                            exit(-1);
+                        }
+                    }
                 }
                     IO_WriteInfo2(&len2);
                     break;
@@ -754,20 +799,44 @@ int main()
                 {
                     printf("您选择了登录功能");
                     len2=lengths2();
-                    printf("请输入用户名和密码:");
-                    scanf("%s %s",user_number.username,user_number.adminaster);//假设没有此user
-                    for(i=0;i<len2;i++)
+                    printf("请输入用户名:");
+                    scanf("%s",user_number.username);
+                    //printf("请输入你的密码:");
+                    //scanf("%s",user_number.adminaster);
+                    while (1)
                     {
-                        if((strcmp(use[i].username,user_number.username)==0)&&(strcmp(use[i].adminaster,user_number.adminaster)==0))
+                        printf("请输入密码:");
+                        for(k=0;;)
                         {
-                            flag=1;
-                            printf("登录成功!\n");
-                            break;
+                            getchar();
+                            c=getch();    //只有在windows下才能用
+                            if((c)=='\r')
+                                break;
+                            user_number.adminaster[k++]=c;
+                            printf("*");
                         }
+                        user_number.adminaster[k]='\0';
+                        for(i=0;i<len2;i++)
+                        {
+                            if((strcmp(use[i].username,user_number.username)==0)&&(strcmp(use[i].adminaster,user_number.adminaster)==0))
+                            {
+                                flag=1;
+                                printf("登录成功!\n");
+                                break;
+                            }
+                        }
+                        if(i==len2)
+                            flag=0;
+                        if (flag!=1)
+                        {
+                            printf("用户名或密码错误!");
+                            exit(-1);
+                        }
+                        else
+                            break;
                     }
-                    if (flag!=1)
-                        printf("用户名或密码错误!");
                 }
+                    
                     break;
                 case 3:
                 {
@@ -779,28 +848,7 @@ int main()
         
     }
     
-    /*  while (1) {
-     printf("请输入密码:");
-     for(k=0;;)
-     {
-     c=getch();
-     if((c)=='\r')
-     break;
-     user_mima[k++]=c;
-     printf("*");
-     }
-     user_mima[k]='\0';
-     
-     if(strcmp(system_mima,&user_mima)!=0)
-     {
-     printf("\n输入的密码不正确,请重新输入密码!\n");
-     }
-     else
-     {
-     printf("             \n登录成功!\n\n");
-     break;
-     }
-     }
+    /*
      */
     
     //////////登录成功进行以下操作
